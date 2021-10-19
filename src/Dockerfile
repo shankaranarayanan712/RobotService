@@ -1,4 +1,4 @@
-FROM node:9-slim
+FROM node:latest
 WORKDIR /source
 
 COPY package.json /source

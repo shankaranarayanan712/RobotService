@@ -1,3 +1,10 @@
+# Problem One
+The first problem's solution is present in the filename called problemOne.js
+ to run this you can run  the command mentioned below 
+
+ $ node problemOne.js
+
+# Below are the application documentation for the Robot service
 # Project Title
 Robot Service
 ---
@@ -32,15 +39,20 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 ## Running the project using Docker
 Note: To use Docker, you would need Docker installed in your system. Hence Please install if it is not present already
 
-1. Run the build command to build the container
+ 1. cd YOUR_PATH/src
+
+ 2. Run the build command to build the container
  $ docker build -t robot-service .
 
-2. run the container which was build using the below command
+3. run the container which was build using the below command
  $ docker run -it -p 9000:8080 robot-service
+
+The application will be running on http://localhost:9000 and the endpoints will be /api/robot
+for example, if you need to get the robot location you can use http://localhost:9000/api/robot
+Similarly for post method use Post as method type with http://localhost:9000/api/robot.
 ## Testing the project
 
     $ npm test
-
 
 ## Service Overview
 
@@ -85,5 +97,3 @@ Note: To use Docker, you would need Docker installed in your system. Hence Pleas
 9. Test cases are written using Jest and supertest libraries
 
 10. The Code is formatted using Prettier.
-
-

@@ -18,13 +18,13 @@ export const moveRobot = async (direction: string, step: number): Promise<string
             let previousLeft: number = 0,
                 previousRight: number = 0;
             if (direction == 'Forward') {
-                countUp += step;
+                countUp += Math.abs(step);
             } else if (direction == 'Backward') {
-                countDown += step;
+                countDown += Math.abs(step);
             } else if (direction == 'Left') {
-                countLeft += step;
+                countLeft += Math.abs(step);
             } else if (direction == 'Right') {
-                countRight += step;
+                countRight += Math.abs(step);
             }
             // required final position of robot
             let xCoordinate = countRight - countLeft;
