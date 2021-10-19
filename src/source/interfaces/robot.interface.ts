@@ -5,3 +5,10 @@ export interface robot {
     coordinates: Array<any>;
     createdAt: Date;
 }
+
+export interface log {
+    operationTime: string;
+    direction: string;
+    previousPosition: string;
+    currentPosition: string;
+}

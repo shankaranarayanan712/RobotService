@@ -30,10 +30,10 @@ router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-    if (req.method == 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        return res.status(200).json({});
-    }
+    // if (req.method == 'OPTIONS') {
+    //     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+    //     return res.status(200).json({});
+    // }
 
     next();
 });
@@ -53,3 +53,4 @@ router.use((_req, res) => {
 const httpServer = http.createServer(router);
 
 httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));
+module.exports = httpServer;

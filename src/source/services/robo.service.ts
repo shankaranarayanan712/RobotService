@@ -1,12 +1,12 @@
 const fs = require('fs');
 import { errorMessages, status } from '../constants';
 import { validateInput } from '../validations/robotValidations';
-import { robot } from '../interfaces/robot.interface';
+import { robot, log } from '../interfaces/robot.interface';
 import logging from '../config/logging';
 const { v4: uuidv4 } = require('uuid');
 
 export const moveRobot = async (direction: string, step: number): Promise<string> => {
-    let response = '';
+    let response: any = {};
     try {
         const isValidInput = validateInput(direction, step);
 
@@ -49,6 +49,7 @@ export const moveRobot = async (direction: string, step: number): Promise<string
             const coordinateString = JSON.stringify(totalCoordinates);
             await fs.writeFileSync(`${__dirname}/robot.txt`, coordinateString);
             response = constructLog(direction, step, previousLeft, previousRight, xCoordinate, yCoordinate);
+            response = constructResponse(200, { response });
         } else {
             let responseObject = { error: errorMessages.INVALID_REQUEST };
             response = constructResponse(400, responseObject);
@@ -56,7 +57,7 @@ export const moveRobot = async (direction: string, step: number): Promise<string
     } catch (err: any) {
         logging.error('moveRobot', err);
     }
-    return constructResponse(200, { response });
+    return response;
 };
 
 export const getRobotLatestLocation = async () => {
@@ -70,7 +71,7 @@ export const getRobotLatestLocation = async () => {
                 const latestPosition = existingRobots[existingRobots.length - 1];
                 previousLeft = latestPosition.coordinates[0];
                 previousRight = latestPosition.coordinates[1];
-                response = constructResponse(200, { previousLeft, previousRight });
+                response = constructResponse(200, { x: previousLeft, y: previousRight });
             }
         } else {
             response = constructResponse(200, { x: 0, y: 0 });
@@ -80,18 +81,20 @@ export const getRobotLatestLocation = async () => {
     }
     return response;
 };
-const constructLog = (direction: string, step: number, previousLeft: number, previousRight: number, xCoordinate: number, yCoordinate: number): string => {
+const constructLog = (direction: string, step: number, previousLeft: number, previousRight: number, xCoordinate: number, yCoordinate: number): log => {
     let logBody = '';
+    const responseObject: log = {
+        operationTime: 'Operation Time: (' + new Date().toISOString() + ')',
+        direction: 'Command Direction: (' + direction + ', Step Size ' + step + ')',
+        previousPosition: 'Previous Position: (' + previousLeft + ', ' + previousRight + ')',
+        currentPosition: 'Current Position: (' + xCoordinate + ', ' + yCoordinate + ')'
+    };
     try {
-        logBody += '\n\n Operation Time: (' + new Date().toISOString() + ') \n \n';
-        logBody += 'Command Direction: (' + direction + ', Step Size ' + step + ') \n \n';
-        logBody += 'Previous Position: (' + previousLeft + ', ' + previousRight + ')\n \n';
-        logBody += 'Current Position: (' + xCoordinate + ', ' + yCoordinate + ')  \n \n';
-        logging.info('Output generator', logBody);
+        logging.info('Output generator', JSON.stringify(logBody), responseObject);
     } catch (err: any) {
         logging.error('constructLog', err);
     }
-    return logBody;
+    return responseObject;
 };
 
 const constructResponse = (stat: number, body: object) => {
