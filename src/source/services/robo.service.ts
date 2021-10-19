@@ -59,6 +59,27 @@ export const moveRobot = async (direction: string, step: number): Promise<string
     return constructResponse(200, { response });
 };
 
+export const getRobotLatestLocation = async () => {
+    let response = '';
+    try {
+        let previousLeft: number = 0,
+            previousRight: number = 0;
+        if (fs.existsSync(`${__dirname}/robot.txt`)) {
+            const existingRobots: Array<robot> = JSON.parse(fs.readFileSync(`${__dirname}/robot.txt`));
+            if (existingRobots && existingRobots.length > 0) {
+                const latestPosition = existingRobots[existingRobots.length - 1];
+                previousLeft = latestPosition.coordinates[0];
+                previousRight = latestPosition.coordinates[1];
+                response = constructResponse(200, { previousLeft, previousRight });
+            }
+        } else {
+            response = constructResponse(200, { x: 0, y: 0 });
+        }
+    } catch (err: any) {
+        logging.error('getRobotLocation', err);
+    }
+    return response;
+};
 const constructLog = (direction: string, step: number, previousLeft: number, previousRight: number, xCoordinate: number, yCoordinate: number): string => {
     let logBody = '';
     try {
