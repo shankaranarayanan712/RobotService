@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import logging from './config/logging';
 import config from './config/config';
-import sampleRoutes from './routes/robo.routes';
+import sampleRoutes from './routes/robot.routes';
 
 const NAMESPACE = 'Server';
 const router = express();

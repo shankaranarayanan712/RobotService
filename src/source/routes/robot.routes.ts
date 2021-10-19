@@ -1,5 +1,5 @@
 import express from 'express';
-import controller from '../controllers/robo.controller';
+import controller from '../controllers/robot.controller';
 
 const router = express.Router();
 

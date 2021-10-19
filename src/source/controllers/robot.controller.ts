@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { moveRobot, getRobotLatestLocation } from '../services/robo.service';
+import { moveRobot, getRobotLatestLocation } from '../services/robot.service';
 import logging from '../config/logging';
 const operateRobot = async (req: Request, res: Response) => {
     try {
