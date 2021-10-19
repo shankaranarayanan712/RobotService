@@ -25,13 +25,22 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 ## Install
     $ cd YOUR_PATH/src
     $ npm install
-## Running the project
+## Running the project using npm
 
     $ npm start
 
+## Running the project using Docker
+Note: To use Docker, you would need Docker installed in your system. Hence Please install if it is not present already
+
+1. Run the build command to build the container
+ $ docker build -t robot-service .
+
+2. run the container which was build using the below command
+ $ docker run -it -p 9000:8080 robot-service
 ## Testing the project
 
     $ npm test
+
 
 ## Service Overview
 
@@ -50,8 +59,10 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 6. Service validations are in place to validate the request
    for ex: if the body properties are not passed to Post method, it throws error and does not proceed with operation
 
+7. The service is Containerized using Docker . Please refer to " ## Running the project using Docker" to build nd run
 
-7. Usage: If ou are running on local, use these endpoint in Postman or any other APi testing tools
+8. Usage: 
+   a. If ou are running using npm , use these endpoint in Postman or any other APi testing tools
         1. To move robot
         Method:POST
         http://localhost:8080/api/robot 
@@ -61,8 +72,18 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
         Method: GET
         http://localhost:8080/api/robot
 
-8. Test cases are written using Jest and supertest libraries
+    b.  If ou are running  using docker , use these endpoint in Postman or any other APi testing tools
+        1. To move robot
+        Method:POST
+        http://localhost:9000/api/robot 
+        parameters: { "direction" : "Backward", "step": 12 }
 
-9. The Code is formatted using Prettier.
+        2. To get latest Location
+        Method: GET
+        http://localhost:9000/api/robot
+
+9. Test cases are written using Jest and supertest libraries
+
+10. The Code is formatted using Prettier.
 
 
