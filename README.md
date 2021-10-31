@@ -1,8 +1,3 @@
-# Problem One
-The first problem's solution is present in the filename called problemOne.js
- to run this you can run  the command mentioned below 
-
- $ node problemOne.js
 
 # Below are the application documentation for the Robot service
 # Project Title
